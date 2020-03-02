@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b1f7af822a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <title>Cadastro de clientes</title>
+
+
+    <script>
+
+      function request(){
+        axios.get('http://localhost/20Simples/Ativ%20de%20Login/backend/index.php').then(response => console.log(response));
+        axios.post('http://localhost/20Simples/Ativ%20de%20Login/backend/index.php', {
+          //Todos os dados a serem passados
+          //nome: nome ...
+          //No select dos estados, você põe como value o id do estado no banco
+        }).then(response => console.log(response));
+      }
+    </script>
+</head>
+
+
+<body>
+    <div class="container">
+        <form id="form-login" action="login.html" onsubmit="submit()">
+            <h1>Cadastro de clientes</h1>
+
+            <div class="content">
+                <div class="coisa grid grid-template-columns">
+
+                    <input type="text" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$"  class="nome" name="nome" id="nome" placeholder="Nome" required>
+
+                    <div class="field sexo">
+                        <label for="nome">Sexo:</label>
+                        <input type="radio" name="sexo" id="m" value="M">Masculino
+                        <input type="radio" name="sexo" id="f" value="F">Feminino
+                    </div>
+
+                    <input type="email" class="email" name="email" id="email" placeholder="E-mail" required>
+
+                    <input type="text" class="cpf" name="cpf" id="cpf" placeholder="CPF" required>
+                    <input type="text" name="rg" id="rg" placeholder="RG" pattern="[\d,.?!]*" required>
+                    <textarea name="obs" id="obs" placeholder="Observações"></textarea>
+
+                    <div class="field">
+                        <label for="nome">Guarda Religiosa:</label>
+                        <input type="radio" name="guarda_religiosa" id="s">Sim
+                        <input type="radio" name="guarda_religiosa" id="n">Não
+                    </div>
+                    
+                    <input type="date" name="data_nascimento" id="data" required>
+                </div>
+
+                <div class="coisa">
+                  <input type="text" class="sobrenome" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" name="sobrenome" id="sobrenome" placeholder="Sobrenome" required>
+                    <input type="text" name="cep" id="cep" placeholder="CEP" required>
+                    <input type="text" name="logradouro" id="logradouro" placeholder="Logradouro" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required>  
+                    <input type="text" name="numero" id="numero" placeholder="Número" required>
+                    <input type="text" name="bairro" id="bairro" placeholder="Bairro" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required>
+                    <input type="text" name="cidade" id="cidade" placeholder="Cidade" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required>
+                    
+                    <select>
+                        <option value="*">UF</option>
+                        <option value="SP">SP</option>
+                        <option value="MG">MG</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" onclick="request()">CONCLUIR</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td><i onclick=selectClient(this) class="fas fa-trash-alt"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                <td><i onclick=selectClient(this) class="fas fa-trash-alt"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+                <td><i onclick=selectClient(this) class="fas fa-trash-alt" data-toggle="modal" data-target="#exampleModalCenter"></i></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  ...
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div id="optionCase">
+            <button><i class="fas fa-trash-alt"></i></button>
+            <button><i class="fas fa-pen"></i></button>
+          </div> -->
+    </div>
+</body>
+</html>

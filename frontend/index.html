@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b1f7af822a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/b1f7af822a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <title>Cadastro de clientes</title>
+</head>
+<body onload="loadTable()">
+    <div class="container" id="form-screen">
+      
+      <div class="content">
+        <form id="form-login" onsubmit="insertClients(event)">
+            <h1>Cadastro de clientes</h1>
+
+              <div class="field">
+                <input type="text" class="nome" name="nome" id="nome" placeholder="Nome" minlength="2" maxlength="45" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required>
+                <input type="text" class="sobrenome" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" minlength="2" name="sobrenome" id="sobrenome" placeholder="Sobrenome" maxlength="45" required>
+              </div>
+              <div class="field sexo">
+                
+                  <div class="radio-content">
+                    <label for="form-check">Sexo:</label>
+                    <input type="radio" name="sexo" id="m" value="M">Masculino
+                    <input type="radio" name="sexo" id="f" value="F">Feminino
+                  </div>
+
+                  <input type="date" name="data_nascimento" id="data" required>
+              </div>
+
+              <div class="field">
+                <input type="text" class="cpf" name="cpf" id="cpf" placeholder="CPF (apenas números)" onblur="TestaCPF(this.value, this)" minlength="11" maxlegth="11" pattern="[0-9]+$" required>
+                <input type="text" name="rg" id="rg" placeholder="RG (apenas números)" minlength="9" maxlength="15" pattern="[0-9]+$" required>
+              </div>
+
+              <div class="field">
+
+                <div class="radio-content">
+                  <label for="nome">Guarda Religiosa:</label>
+                  <input type="radio" name="guarda_religiosa" id="1" value="1">Sim
+                  <input type="radio" name="guarda_religiosa" id="0" value="0">Não
+                </div>
+
+                <textarea name="obs" id="obs" placeholder="Observações" maxlength="150"></textarea>
+              </div>
+
+              <div class="field">
+                <input type="email" class="email" name="email" id="email" placeholder="E-mail" minlength="6" maxlength="75" required>
+              <input type="text" name="telefone" id="telefone" placeholder="Telefone" minlength="8" maxlength="13" required>
+              </div>
+              
+              <div class="field">
+                <input type="text" name="logradouro" id="logradouro" placeholder="Logradouro" min="4" maxlength="45" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required>  
+                <input type="text" name="numero" id="numero" placeholder="Número" minlength="1" maxlength="8" pattern="[0-9]+$" required>
+              </div>
+              
+              <div class="field">
+                <input type="text" name="bairro" id="bairro" placeholder="Bairro" minlength="2" maxlength="45" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required>
+                <input type="text" name="cidade" id="cidade" placeholder="Cidade" minlength="2" maxlength="45" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required>
+              </div>
+
+              <div class="field">
+                <input type="text" name="cep" id="cep" placeholder="CEP" pattern="[0-9]+$" minlength="9" maxlength="9" required>
+                <select id="select_estado">
+                      <option value="0">Selecione seu Estado</option>
+                      <option value="1">Acre</option>
+                      <option value="2">Alagoas</option>
+                      <option value="3">Amapá</option>
+                      <option value="4">Amazonas</option>
+                      <option value="5">Bahia</option>
+                      <option value="6">Ceará</option>
+                      <option value="7">Distrito Federal</option>
+                      <option value="8">Espírito Santo</option>
+                      <option value="9">Goiás</option>
+                      <option value="10">Maranhão</option>
+                      <option value="11">Mato Grosso</option>
+                      <option value="12">Mato Grosso do Sul</option>
+                      <option value="13">Minas Gerais</option>
+                      <option value="14">Pará</option>
+                      <option value="15">Paraíba</option>
+                      <option value="16">Paraná</option>
+                      <option value="17">Pernambuco</option>
+                      <option value="18">Piauí</option>
+                      <option value="19">Rio de Janeiro</option>
+                      <option value="20">Rio Grande do Norte</option>
+                      <option value="21">Rio Grande do Sul</option>
+                      <option value="22">Rondônia</option>
+                      <option value="23">Roraima</option>
+                      <option value="24">Santa Catarina</option>
+                      <option value="25">São Paulo</option>
+                      <option value="26">Sergipe</option>
+                      <option value="27">Tocantins</option>
+                </select>
+              </div>
+
+            <button type="submit">CONCLUIR</button>
+        </form>
+      </div>
+
+        <div id="alter-screen">
+          <div id="go-table" class="btn-go" onclick="alterScreen('#table-screen')">
+            <i class="fas fa-arrow-circle-down"></i> Ver clientes cadastrados
+          </div>
+          <div id="go-form" class="btn-go" onclick="alterScreen('#form-screen')">
+            <i class="fas fa-arrow-circle-up"></i> Cadastrar novo cliente
+          </div>
+        </div>
+
+    </div>
+    <div class="container" id="table-screen">
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Sobrenome</th>
+                <th scope="col">Número</th>
+                <th scope="col">Sexo</th>
+                <th scope="col">DDN</th>
+                <th scope="col">CPF</th>
+                <th scope="col">RG</th>
+                <th scope="col">Guarda Religiosa</th>
+                <th scope="col">Obs.</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">CEP</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <!-- <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td><i onclick=deleteClient(this) class="fas fa-trash-alt"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                <td><i onclick=deleteClient(this) class="fas fa-trash-alt"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+                <td><i onclick=deleteClient(this) class="fas fa-trash-alt" data-toggle="modal" data-target="#exampleModalCenter"></i></td>
+              </tr> -->
+            </tbody>
+          </table>
+    </div>
+</body>
+
+<script>
+  function loadTable() {
+    // Preenchimento da tabela com clientes cadastrados
+    axios.get('http://localhost/decolar.com/decolar.com-master/backend/index.php')
+      .then(resp => {
+        const tbody = document.getElementById('tbody');
+        tbody.innerHTML = resp.data;
+      })
+
+    // Validação do campo Data
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+    if(dd < 10){
+      dd = '0' + dd;
+    } 
+    if(mm < 10){
+      mm = '0' + mm;
+    } 
+    youngPossible = (yyyy - 18)+'-'+mm+'-'+dd; // Ter no mínimo 18 anos
+    oldPossible = (yyyy - 130)+'-'+mm+'-'+dd; // Ter no máximo 130 anos
+    
+    document.getElementById("data").setAttribute("max", youngPossible);
+    document.getElementById("data").setAttribute("min", oldPossible);
+  }  
+  
+  function teste(e) {
+    e.preventDefault();
+    var sexo;
+    var guarda_religiosa;
+
+    const radioSexo = document.getElementsByName('sexo');
+    const radioGR = document.getElementsByName('guarda-religiosa');
+    for (i = 0; radioSexo.length; i++) {
+        console.log(radioSexo[i])
+        if (radioSexo[i].checked == true) {
+            sexo = radioSexo[i].value;
+        }
+    }
+
+    for (var i = 0; radioGR.length - 1; i++) {
+        if (radioGR[i].checked == true) {
+            guarda_religiosa = radioGR[i].value;
+        }
+    }
+
+    alert(sexo)
+    alert(guarda_religiosa)
+  }
+  
+  function insertClients(e) {
+    e.preventDefault();
+    const nome = document.getElementById('nome').value;
+    const sobrenome = document.getElementById('sobrenome').value;
+    const email = document.getElementById('email').value;
+    const cpf = document.getElementById('cpf').value;
+    const rg = document.getElementById('rg').value;
+    const obs = document.getElementById('obs').value;
+    const data_nascimento = document.getElementById('data').value;
+    const cep = document.getElementById('cep').value;
+    const logradouro = document.getElementById('logradouro').value;
+    const numero = document.getElementById('numero').value;
+    const bairro = document.getElementById('bairro').value;
+    const cidade = document.getElementById('cidade').value;
+    const telefone = document.getElementById('telefone').value;
+    const senha = 'admin';
+    
+    const selectEstado = document.getElementById('select_estado');
+    const cod_estado = selectEstado.options[selectEstado.selectedIndex].value;
+
+    var sexo;
+    var guarda_religiosa;
+
+    const radioSexo = document.getElementsByName('sexo');
+    const radioGR = document.getElementsByName('guarda_religiosa');
+
+    for (var i = 0; i< radioSexo.length; i++) {
+        if (radioSexo[i].checked) {
+            sexo = radioSexo[i].value;
+        }
+    }
+    for (var i = 0; i< radioGR.length; i++) {
+        if (radioGR[i].checked) {
+            guarda_religiosa = radioGR[i].value;
+        }
+    }
+    console.log(nome);
+
+    if (cod_estado == '0') {
+      alert('Selecione seu Estado!');
+      return;
+    }
+
+    axios.post('http://localhost/decolar.com/decolar.com-master/backend/index.php', {
+      nome,
+      sobrenome,
+      email,
+      cpf,
+      rg,
+      obs,
+      data_nascimento,
+      cep,
+      logradouro,
+      numero,
+      bairro,
+      cidade,
+      sexo,
+      guarda_religiosa,
+      cod_estado,
+      telefone
+    }).then(() => {
+      alert('Cliente salvo com sucesso!');
+      loadTable();
+    })
+    .catch(error => {
+      console.log(error)
+    })
+
+  }
+
+function deleteClient(tr, e) {
+    e.preventDefault();
+    const id_cliente = tr.parentNode.parentNode.children[0].innerHTML;
+
+    var r = confirm('Deseja mesmo excluir o registro? \nEsta ação não poderá ser desfeita.');
+
+    if (r == true){
+      axios.delete(`http://localhost/decolar.com/decolar.com-master/backend/index.php?id_cliente=${id_cliente}`, { 
+          
+      })
+      // axios.post(`http://localhost/decolar.com/decolar.com-master/backend/index.php`, {params: { id_cliente }, _method: 'delete'})
+      .then (() => {
+        loadTable();
+        console.log(id_cliente)
+        alert('Registro excluído com sucesso.');
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    }
+    else return;
+}
+
+function TestaCPF(strCPF, field) {
+    var Soma;
+    var Resto;
+    Soma = 0;
+    if (strCPF == "00000000000") {
+      alert('CPF inválido!');
+      return false;
+      field.focus();
+    } 
+     
+  for (i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+  Resto = (Soma * 10) % 11;
+   
+    if ((Resto == 10) || (Resto == 11))  Resto = 0;
+    if (Resto != parseInt(strCPF.substring(9, 10)) ) {
+      alert('CPF inválido!');
+      return false;
+      field.focus();
+    }
+   
+  Soma = 0;
+    for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+    Resto = (Soma * 10) % 11;
+   
+    if ((Resto == 10) || (Resto == 11))  Resto = 0;
+    if (Resto != parseInt(strCPF.substring(10, 11) ) ) {
+      alert('CPF inválido!');
+      return false;
+      field.focus();
+    }
+    return true;
+}
+
+function alterScreen(screen) {
+  window.location.href = screen;
+}
+
+</script>
+
+</html>
